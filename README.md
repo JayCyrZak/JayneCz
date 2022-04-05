@@ -1,4 +1,4 @@
-👋 Hi, I’m @JayneCz  
+👋 Hi, I’m Janik Czempin, AKA JayneCz  
 🎮 Junior Games Developer  
 👀 Looking for Work  
 🎓 Bachelor of Computer Science (Focus on Games Engineering)  
