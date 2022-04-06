@@ -1,0 +1,481 @@
+Overview of requests to https://socialgaming.deine.cloud/
+
+client-side todo:
+validate return code 2XX
+validate json.status=="ok"
+
+colors are specified as AARRGGBB
+
+
+Request registration
+POST /api/register
+{
+	"phone-number":491234567890
+}
+Reply:
+{
+	"status":"ok",
+	"key":"SOME_SERVER_ASSIGNED_API_KEY"
+}
+
+
+
+
+###################################################################
+###################################################################
+###################################################################
+The following requests need an API key assigned during registration
+set it via header: "Melion-Key: SOME_SERVER_ASSIGNED_API_KEY\r\n"
+###################################################################
+###################################################################
+###################################################################
+
+
+STATUS
+GET /api/status
+Reply:
+{
+	"status":"ok",
+	"value":"pending"	-> sms key missing
+			"ready"		-> verified
+}
+
+REGISTRATION PART 2
+Request /api/validate
+POST
+{
+	"sms-key":"MY_SMS_KEY"
+}
+Reply:
+{
+	"status":"ok"
+}
+
+
+
+
+
+Request a user name change
+[a-zA-Z0-9\-\_]{5,}
+GET /api/config/name/NEW_USERNAME
+Reply:
+{
+	"status":"ok"
+}
+
+
+Request a team change
+GET /api/config/team/NEW_TEAM_ID
+Reply:
+{
+	"status":"ok"
+}
+
+
+Request a team change
+POST /api/config/message
+{
+	"msg":"MY_PROFILE_MESSAGE"
+}
+Reply:
+{
+	"status":"ok"
+}
+
+
+
+
+
+
+Request position update
+POST /api/map/update
+{
+	"longitude":COORD_LOGITUDE,
+	"latitude":COORD_LATTITUDE,
+	"color":"MY_CURRENT_FREE_RUN_COLOR",
+}
+Reply:
+{
+	"status":"ok",
+	"painting-with":[UID1,UID2...]
+}
+
+Get friends/global/solo color map
+GET /api/map/FRIENDS_GLOBAL_OR_SOLO_SMALL/LATITUDE,LONGITUDE;ANGLE
+Reply:
+{
+	"status":"ok",
+	"tiles":[
+		{"id":POINT_ID,"color":"AARRGGBB","latitude":13.37,"longitude":1.337,"size":0.1337,"team":TEAMID},
+		{"id":POINT_ID,"color":"AARRGGB2","latitude":13.373,"longitude":1.3373,"size":0.13373,"team":TEAMID},
+		...
+	]
+}
+
+
+
+
+
+profile
+GET /api/profile/[USER_ID]
+Reply:
+{
+	"status":"ok",
+	"profile":{
+		"id":USER_ID,
+		"name":"USER_NAME",
+		OPT "phone":PHONE_NUMBER,
+		"team":TEAM_ID,
+		"message":"PROFILE_MESSAGE",
+		"num-achievements":NUMBER,
+		"num-points":NUMBER,
+		"num-friends":NUMBER,
+		"painted-with-friends":NUMBER,
+		"painted-together":NUMBER,
+		"relation":FRIENDSHIP_STATUS,
+		"since":FRIENDSHIP_SINCE,
+		"direction":FRIENDSHIP_DIRECTION
+	}
+}
+
+
+
+
+
+friends list
+GET /api/friends/list/[USER_ID]
+Reply:
+{
+	"status":"ok",
+	"friends":[
+		{
+			"id":USER_ID
+			"name":"THE_USERS_NAME",
+			"message":"PROFILE_MESSAGE"
+			"team":TEAM_ID,
+			OPT "phone":PHONE_NUMBER,
+			"relation":FRIENDSHIP_STATUS,
+			"since":TIME_IN_SECONDS,
+			"painted-together":SOME_VALUE,
+			"direction":"INCOMING_OUTGOING__OR__UNKNOWN",
+		},
+		...
+	]
+}
+
+
+search
+GET /api/search/name/[USER_NAME]
+Reply:
+{
+	"status":"ok",
+	"users":[
+		{
+			"id":USER_ID
+			"name":"THE_USERS_NAME",
+			"team":TEAM_ID,
+			"message":"PROFILE_MESSAGE",
+			"painted-together":SOME_VALUE,
+			"relation":FRIENDSHIP_STATUS,
+			"since":TIME_IN_SECONDS,
+			"direction":"INCOMING_OUTGOING__OR__UNKNOWN",
+		},
+		...
+	]
+}
+Reply:
+{
+	"status":"ok"
+}
+
+
+Add:
+GET /api/friends/add/USER_ID
+Reply:
+{
+	"status":"ok"
+}
+
+
+Accept:
+GET /api/friends/accept/USER_ID
+Reply:
+{
+	"status":"ok"
+}
+
+
+Reject/Remove:
+GET /api/friends/remove/USER_ID
+Reply:
+{
+	"status":"ok"
+}
+
+
+
+PICTURES
+
+GET /picture/list/[USER_ID]
+Reply:
+{
+	"status":"ok",
+	"pictures":[
+		{
+			"id":PICTURE_ID,
+			#"lat":LATITUDE,
+			#"long":LONGITUDE,
+			#"time":TIME_IN_SECONDS,
+			"name":"PICTURE_NAME",
+			"description":"PICTURE_DESCRIPTION",
+			"profile":BOOL_IS_PROFILE_PICTURE,
+			"rating":AVG_RATING,
+			"num_ratings":NUMBER_OF_RATINGS
+		}
+	]
+}
+
+submit a picture
+POST /picture/submit/[CHALLENGE_ID]
+Request:
+{
+	"name":"PICTURE_NAME",
+	"latitude":LATITUDE,
+	"longitude":LONGITUDE,
+	"description":"PICTURE_DESCRIPTION",
+	"profile":BOOL_IS_PROFILE_PICTURE,
+	"image":BASE64_ENCODED_IMAGE
+}
+Reply:
+{
+	"status":"ok"
+}
+
+get a picture
+GET /picture/PICTURE_ID
+Reply: binary image OR
+{
+	"status":"ok",
+	"creator":USER_ID,
+	"latitude":LATITUDE,
+	"longitude":LONGITUDE,
+	"time":TIME_IN_SECONDS,
+	"challenge_id":CHALLENGE_ID,
+	"name":TITLE,
+	"description":DESCRIPTION,
+	"image":BASE64_ENCODED_IMAGE
+}
+
+rate a picture
+Get /picture/rate/PICTURE_ID/RATING
+Reply:
+{
+	"status":"ok"
+}
+
+
+list by "global" (=WHOM)
+GET /picture/list/WHOM
+Reply:
+{
+	"status":"ok",
+	"pictures":[
+		{
+			"id":PICTURE_ID,
+			"creator":USER_ID,
+			#"lat":LATITUDE,
+			#"long":LONGITUDE,
+			#"time":TIME_IN_SECONDS,
+			"name":"PICTURE_NAME",
+			"description":"PICTURE_DESCRIPTION",
+			"profile":BOOL_IS_PROFILE_PICTURE,
+			"rating":AVG_RATING,
+			"num_ratings":NUMBER_OF_RATINGS,
+	]
+}
+
+
+
+###################################################################
+###################################################################
+###################################################################
+The following requests are not yet implemented, but specified
+###################################################################
+###################################################################
+###################################################################
+
+
+
+leaderboard
+GET /api/leaderboard/SORT_BY/PAGE_NUMBER
+Reply:
+{
+	"status":"ok",
+	"page":number,
+	"players":[
+		{
+			"id":USER_ID,
+			"name":"THE_USERS_NAME",
+			"points":THE_USERS_POINTS,
+			"place":PLACE,
+			"num-achievements":NUM_OF_ACHIEVEMENTS_UNLOCKED
+		},
+		...
+	],
+}
+
+
+
+
+
+/*
+Get the competitive map
+POST /api/competitive
+{
+	"competitive_id":"COMP_ID"
+}
+
+
+
+Create a team
+POST /api/team/create
+{
+	"teamname":"MY_UNIQUE_TEAM_NAME"
+}
+Reply:
+{
+	"status":"ok",
+	##RFC: team key?
+}
+
+
+
+Invite to team
+POST /api/team/invite
+{
+	"teamname":"MY_UNIQUE_TEAM_NAME", ##RFC: team key?
+	"username":"NAME_OF_USER_TO_INVITE"
+}
+Reply:
+{
+	"status":"ok"
+}
+
+
+
+start the team matching
+POST /api/team/getmatch
+{
+}
+Reply:
+{
+	"status":"ok"
+}
+*/
+
+
+achievements:
+/*
+request to unlock an achievement
+POST /achievement/unlock/
+{
+	"achievement_id": achiev_id
+}
+Reply:
+{
+	"status": "ok"
+}
+
+/*
+load all unlocked achievements
+GET /achievement/unlockedachievements/
+Reply:
+{
+	"status": "ok"
+	"achievements":[
+		{
+			"id":	achievement_id,
+			"name": "ACHIEVEMENT_NAME"
+           	},
+	 	...
+	] 
+}
+*/
+
+/*
+get the longest friend
+GET /achievement/longestfriend/
+Reply:
+{
+	"status": "ok"
+	"longest_friend": friends_since 
+}
+*/
+
+/*
+get the biggest painted together value
+GET /achievement/mostpaintedtoghether/
+{
+	"status":	"ok",
+	"painted_together": max_painted_together
+ }
+*/
+
+/*
+get the amount of friends the player has
+GET /achievement/amountoffriends/
+{
+	"status": "ok",
+	"friends": amount_of_friends
+}
+*/
+
+/*
+get the distance that the player walked
+GET /achievement/distance/
+{
+	"status": "ok",
+	"distance": walked_distance
+}
+*/
+
+leaderboards
+get achievement leaderboard
+GET /leaderboards/[range]/achievements/
+{
+	"status": "ok",
+	"user_ranks": [
+		{
+		"rank": rank,
+		"name":	user_name,
+		"points": amt_of_achievements
+		}
+	,...
+	]
+}
+get distance leaderboard
+GET /leaderboards/[range]/distance/
+{
+	"status": "ok",
+	"user_ranks": [
+		{
+		"rank": rank,
+		"name":	user_name,
+		"points": distance_walked
+		}
+	,...
+	]
+}
+get distance leaderboard
+GET /leaderboards/[range]/paintedtogether/
+{
+	"status": "ok",
+	"user_ranks": [
+		{
+		"rank": rank,
+		"name":	user_name,
+		"points": sum_of_paintedtogether
+		}
+	,...
+	]
+}
