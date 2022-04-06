@@ -8,7 +8,7 @@
 ## Context
 - Winter semester 2019/2020
 - University course project
-- University: Technical University Munich
+- University: Technical University of Munich
 - Course: Usability, User Modeling, and Software Ergonomics
 - Assignment: Create a game with multiple UI options and test each option's usability/ergonomics
 

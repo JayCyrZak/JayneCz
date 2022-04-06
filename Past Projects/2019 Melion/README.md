@@ -11,7 +11,7 @@
 ## Context
 - Summer semester 2019
 - University course project
-- University: Technical University Munich
+- University: Technical University of Munich
 - Course: Practical: Social Gaming
 - Assignment: Create a mobile social game
 - Grade: 1.7

@@ -10,7 +10,7 @@
 - High school project
 - School: Maria-Theresia Gymnasium München
 - Assignment: Create any software project as a team in Java
-- Grade: 1.0 (highest grade)
+- Grade: 1.0 
 
 ## Development
 ### 4-Person Development Team
