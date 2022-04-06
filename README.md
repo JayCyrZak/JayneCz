@@ -16,7 +16,6 @@ Competitive Painting à la "Splatoon"
 2020 "Hexatech": University Course "Usability, User Modeling, and Software Ergonomics". PC, 1v1 Local Multiplayer, Top-Down 3D, "Tower Defense"  
 2021 "Sisyphus": University Course "Storyworlds". Singleplayer, First-Person 3D, Story-Based Exploration  
 2021 "Escape from Sisypho": University Course "Storyworlds". Card Game. One-versus-many, Bluffing, Social Deduction  
-2022 Social Gaming Template: Bachelor's Thesis. 2-Player Co-operative Online Multiplayer, Top-down 3D, Tilt Controls, Action  
 
 <!---
 JayneCz/JayneCz is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
