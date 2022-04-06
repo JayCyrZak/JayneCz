@@ -1,4 +1,4 @@
-# Melion
+# Hexatech
 
 ## Gameplay
 - One-versus-one local multiplayer
