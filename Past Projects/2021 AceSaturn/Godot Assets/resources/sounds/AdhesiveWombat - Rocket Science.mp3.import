@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/AdhesiveWombat - Rocket Science.mp3-a1e40101fbd98735e4f25b856c9863ec.mp3str"
+
+[deps]
+
+source_file="res://resources/sounds/AdhesiveWombat - Rocket Science.mp3"
+dest_files=[ "res://.import/AdhesiveWombat - Rocket Science.mp3-a1e40101fbd98735e4f25b856c9863ec.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

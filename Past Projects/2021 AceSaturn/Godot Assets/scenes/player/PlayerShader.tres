@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://scenes/player/PlayerShaderScript.shader" type="Shader" id=1]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/color_to_replace = Color( 0.67451, 0.196078, 0.196078, 1 )
+shader_param/color_replacement = Color( 0.34902, 0.423529, 0.901961, 1 )

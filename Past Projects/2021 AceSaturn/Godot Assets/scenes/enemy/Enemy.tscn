@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://resources/enemy/enemy.png" type="Texture" id=1]
+[ext_resource path="res://scripts/enemy.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 33.0
+
+[node name="Enemy" type="RigidBody2D" groups=[
+"can_take_damage",
+"enemy",
+]]
+collision_layer = 4
+collision_mask = 11
+gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
+linear_damp = 0.0
+angular_damp = 0.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 1.5708
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 1 )
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="FireTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+[connection signal="body_entered" from="." to="." method="_on_Enemy_body_entered"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_FireTimer_timeout"]

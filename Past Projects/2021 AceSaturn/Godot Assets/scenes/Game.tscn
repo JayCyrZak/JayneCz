@@ -1,0 +1,164 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Background.tscn" type="PackedScene" id=2]
+[ext_resource path="res://resources/particles/red_bar.png" type="Texture" id=3]
+[ext_resource path="res://scripts/enemy_spawner.gd" type="Script" id=4]
+[ext_resource path="res://resources/particles/bar_frame.png" type="Texture" id=5]
+[ext_resource path="res://resources/particles/dark_bar.png" type="Texture" id=6]
+[ext_resource path="res://scripts/gui.gd" type="Script" id=7]
+[ext_resource path="res://resources/sounds/AdhesiveWombat - Rocket Science.wav" type="AudioStream" id=8]
+
+[node name="Game" type="Node"]
+
+[node name="Player" parent="." groups=[
+"can_take_damage",
+] instance=ExtResource( 1 )]
+max_health = 20.0
+
+[node name="Camera" type="Camera2D" parent="Player"]
+current = true
+
+[node name="EnemySpawner" type="Node2D" parent="Player"]
+script = ExtResource( 4 )
+my_string = "test"
+
+[node name="SpawnTimer" type="Timer" parent="Player/EnemySpawner"]
+wait_time = 4.0
+autostart = true
+
+[node name="AccelerationTimer" type="Timer" parent="Player/EnemySpawner"]
+wait_time = 30.0
+autostart = true
+
+[node name="Background" parent="." instance=ExtResource( 2 )]
+
+[node name="GUI" type="CanvasLayer" parent="."]
+script = ExtResource( 7 )
+
+[node name="HealthBar" type="TextureProgress" parent="GUI"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 680.0
+margin_bottom = 104.0
+rect_scale = Vector2( 0.25, 0.25 )
+value = 100.0
+texture_under = ExtResource( 6 )
+texture_over = ExtResource( 5 )
+texture_progress = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreText" type="Button" parent="GUI"]
+margin_left = 38.0
+margin_top = 64.0
+margin_right = 197.0
+margin_bottom = 84.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "CONFIRMED KILLS:"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreNumber" type="Button" parent="GUI"]
+margin_left = 153.0
+margin_top = 64.0
+margin_right = 214.0
+margin_bottom = 84.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "0"
+flat = true
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpawnsText" type="Button" parent="GUI"]
+margin_left = 12.0
+margin_top = 83.0
+margin_right = 194.0
+margin_bottom = 103.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "EARTHERS PER MINUTE:"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpawnsPerMinute" type="Button" parent="GUI"]
+margin_left = 93.0
+margin_top = 83.0
+margin_right = 214.0
+margin_bottom = 103.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "0"
+flat = true
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverDialog" type="AcceptDialog" parent="GUI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -92.0
+margin_top = -33.0
+margin_right = 83.0
+margin_bottom = 44.0
+grow_horizontal = 0
+grow_vertical = 2
+popup_exclusive = true
+window_title = "GAME OVER"
+dialog_text = " YOU DIED!   TRY AGAIN?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameStartDialog" type="AcceptDialog" parent="GUI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -156.0
+margin_top = -134.0
+margin_right = 83.0
+margin_bottom = 145.0
+grow_horizontal = 0
+grow_vertical = 2
+popup_exclusive = true
+window_title = "ACE SATURN"
+dialog_text = "DESTROY THE SMUG EARTHERS
+
+CONTROLLER RECOMMENDED
+LEFT STICK / WASD TO TURN
+LEFT TRIGGER / SHIFT TO BOOST
+RIGHT TRIGGER / SPACE TO SHOOT
+
+YOU TURN MUCH FASTER WHEN 
+NOT BOOSTING OR SHOOTING
+
+SPAWNRATE INCREASES OVER TIME
+KILLS HEAL YOU
+
+
+GOOD LUCK, ACE!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -40.0
+autoplay = true
+
+[connection signal="game_over" from="Player" to="GUI" method="_on_Player_game_over"]
+[connection signal="health_changed" from="Player" to="GUI" method="_on_Player_health_changed"]
+[connection signal="score_changed" from="Player" to="GUI" method="_on_Player_score_changed"]
+[connection signal="spawns_per_minute_changed" from="Player/EnemySpawner" to="GUI" method="_on_EnemySpawner_spawns_per_minute_changed"]
+[connection signal="timeout" from="Player/EnemySpawner/SpawnTimer" to="Player/EnemySpawner" method="_on_SpawnTimer_timeout"]
+[connection signal="timeout" from="Player/EnemySpawner/AccelerationTimer" to="Player/EnemySpawner" method="_on_AccelerationTimer_timeout"]
+[connection signal="confirmed" from="GUI/GameOverDialog" to="GUI" method="_on_GameOverDialog_confirmed"]
