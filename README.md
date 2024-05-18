@@ -1,4 +1,4 @@
-👋 Hi, I’m Janik Czempin, AKA JayneCz  
+👋 Hi, I’m Janik Czempin, AKA Jay Cyr Zak  
 🎮 Junior Games Developer  
 👀 Looking for Work  
 🎓 Bachelor of Computer Science (Focus on Games Engineering)  
