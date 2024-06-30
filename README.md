@@ -1,4 +1,5 @@
-👋 Hi, I’m Janik Czempin, AKA Jay Cyr Zak  
+My old Portfolio:
+
 🎮 Junior Games Developer  
 👀 Looking for Work  
 🎓 Bachelor of Computer Science (Focus on Games Engineering)  
